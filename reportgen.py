@@ -91,7 +91,7 @@ class ReportGenerator:
     
     def _init_ui(self):
         """Initialize the Tkinter UI."""
-        self.root.title("Malware Analysis Report Generator v3.3")
+        self.root.title("MD Report Generator v1")
         
         # Menu bar
         menubar = tk.Menu(self.root)
@@ -644,7 +644,7 @@ tlp: "AMBER"
         
         tk.Label(
             about_frame, 
-            text="Malware Analysis Report Generator v3.3",
+            text="Malware Analysis Report Generator v1",
             font=("Helvetica", 14, "bold")
         ).pack(pady=(0, 10))
         
