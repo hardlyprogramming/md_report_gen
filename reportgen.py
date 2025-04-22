@@ -15,6 +15,8 @@ from PIL import Image
 import re
 import sys
 from functools import partial
+from urllib.parse import unquote
+
 
 # Keys to skip from rendering in the meta section (handled specially or elsewhere)
 EXCLUDED_KEYS = {"title", "tlp", "tags"}
@@ -338,7 +340,10 @@ tlp: "AMBER"
             
             # Handle relative paths
             if not Path(img_path).is_absolute():
-                img_path = base_dir / img_path
+                decoded_path = unquote(img_path)  # Decode %20, etc.
+                img_path = base_dir / decoded_path
+                print(img_path)
+                #img_path = base_dir / img_path
             
             try:
                 base64_data = self.encode_image_base64(img_path)
