@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<title>{{ title }}</title>
+<style>
+  body {
+    font-family: {{ font }};
+    margin: {{ margin }};
+    color: #222;
+    background-color: #fdfdfd;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: 2rem;
+    border-bottom: 3px solid #444;
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .logo {
+    width: 140px;
+    margin-bottom: 1rem;
+  }
+
+  .meta-block div {
+    margin-bottom: 0.8rem;
+  }
+
+  .verdict {
+    font-weight: bold;
+    padding: 0.35em 0.9em;
+    border-radius: 6px;
+    margin-top: 0.6rem;
+    margin-bottom: 0.4rem;
+    display: inline-block;
+  }
+
+  .verdict-malicious { background: #d32f2f; color: white; }
+  .verdict-benign    { background: #388e3c; color: white; }
+  .verdict-unknown   { background: #9e9e9e; color: white; }
+
+  .tlp {
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0.7em;
+    border-radius: 6px;
+    font-size: 0.85em;
+    margin: 0.3rem 0 1rem 0;
+  }
+
+  .tlp-red    { background-color: #b71c1c; color: white; }
+  .tlp-amber  { background-color: #ffb300; color: black; }
+  .tlp-green  { background-color: #2e7d32; color: white; }
+  .tlp-clear  { background-color: #e0e0e0; color: black; }
+
+  .tag {
+    display: inline-block;
+    background-color: #eeeeee;
+    border-radius: 4px;
+    padding: 0.2em 0.6em;
+    margin: 0.1em;
+    font-size: 0.85em;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    border: 1px solid #ccc;
+    background-color: white;
+  }
+
+  th {
+    background-color: #f5f5f5;
+    text-align: left;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 0.7em;
+  }
+
+  pre, code {
+    background-color: #f4f4f4;
+    font-family: monospace;
+    font-size: 0.95em;
+    padding: 0.3em;
+    border-radius: 4px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem 0;
+    page-break-inside: avoid;
+  }
+
+  hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 2px dashed #aaa;
+  }
+
+  {{ pygments_css }}
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  {% if logo_path %}
+    <img src="{{ logo_path }}" class="logo" alt="Company Logo" />
+  {% endif %}
+
+  <h1>{{ title }}</h1>
+
+  <div class="meta-block">
+    {{ meta_html|safe }}
+  </div>
+
+  {% if tlp %}
+    <div><strong>TLP:</strong> <span class="tlp {{ tlp_class }}">{{ tlp }}</span></div>
+  {% endif %}
+
+  {% if tag_html %}
+    <div class="tag-container"><strong>Tags:</strong> {{ tag_html|safe }}</div>
+  {% endif %}
+</div>
+
+<hr>
+
+{{ content_html|safe }}
+
+<div class="footer">
+  <p><em>Report generated on {{ generation_date }}</em></p>
+</div>
+
+</body>
+</html>

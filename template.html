@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<title>{{ title }}</title>
+<style>
+  body {
+    font-family: {{ font }};
+    margin: {{ margin }};
+    color: #333;
+    line-height: 1.6;
+  }
+  h1 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.3rem;
+    color: #222;
+    margin-top: 1.2rem;
+  }
+  h2 {
+    color: #444;
+    margin-top: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.2rem;
+  }
+  h3, h4, h5, h6 {
+    color: #555;
+    margin-top: 1.2rem;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem 0;
+    page-break-inside: avoid;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .logo {
+    width: 140px;
+    margin-bottom: 1.5rem;
+    box-shadow: none;
+  }
+  .report-header {
+    margin-bottom: 2rem;
+  }
+  .meta-block {
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #eee;
+  }
+  .meta-block div {
+    margin-bottom: 0.5rem;
+  }
+  .verdict {
+    font-weight: bold;
+    padding: 0.3em 0.8em;
+    border-radius: 4px;
+    margin-top: 0.8rem;
+    margin-bottom: 0.25rem;
+    display: inline-block;
+  }
+  .verdict-malicious { background: #c62828; color: white; }
+  .verdict-benign { background: #2e7d32; color: white; }
+  .verdict-unknown { background: #9e9e9e; color: white; }
+  
+  .tlp {
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.2em 0.6em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    margin: 0.5rem 0;
+  }
+  .tlp-red { background-color: #c62828; color: white; }
+  .tlp-amber { background-color: #ff8f00; color: black; }
+  .tlp-green { background-color: #388e3c; color: white; }
+  .tlp-clear { background-color: #e0e0e0; color: black; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
+  }
+  th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .tag {
+    display: inline-block;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    padding: 0.2em 0.5em;
+    margin: 0.1em;
+    font-size: 0.9em;
+  }
+  
+  .tag-container {
+    margin: 0.7rem 0;
+  }
+  
+  pre {
+    background-color: #f4f4f4;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    border: 1px solid #eee;
+  }
+  
+  code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f5f5f5;
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    font-size: 0.95em;
+  }
+  
+  pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+  }
+  
+  blockquote {
+    border-left: 4px solid #ddd;
+    padding-left: 1rem;
+    color: #666;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 2rem 0;
+  }
+  
+  .footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    color: #777;
+    font-size: 0.9em;
+  }
+  
+  @media print {
+    body {
+      font-size: 11pt;
+    }
+    
+    pre, code {
+      font-size: 9pt;
+    }
+    
+    .no-print {
+      display: none;
+    }
+    
+    a {
+      text-decoration: none;
+      color: #333;
+    }
+  }
+  
+  /* Specific styles for IOC sections */
+  .ioc-table {
+    font-family: monospace;
+    font-size: 0.9em;
+  }
+  
+  /* Pygments Syntax Highlighting */
+  {{ pygments_css }}
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  {% if logo_path %}
+    <img src="{{ logo_path }}" class="logo" alt="Company Logo" />
+  {% endif %}
+
+  <h1>{{ title }}</h1>
+
+  <div class="meta-block">
+    {{ meta_html|safe }}
+  </div>
+
+  {% if tlp %}
+    <div><strong>TLP:</strong> <span class="tlp {{ tlp_class }}">{{ tlp }}</span></div>
+  {% endif %}
+
+  {% if tag_html %}
+    <div class="tag-container"><strong>Tags:</strong> {{ tag_html|safe }}</div>
+  {% endif %}
+</div>
+
+<hr>
+
+{{ content_html|safe }}
+
+<div class="footer">
+  <p><em>Report generated on {{ generation_date }}</em></p>
+</div>
+
+</body>
+</html>

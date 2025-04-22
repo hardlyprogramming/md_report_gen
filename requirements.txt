@@ -1,0 +1,6 @@
+markdown
+PyYAML
+weasyprint
+Pillow
+pygments
+jinja2
