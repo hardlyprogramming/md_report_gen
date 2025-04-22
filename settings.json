@@ -2,10 +2,8 @@
   "style": "friendly",
   "font": "Helvetica, Arial, sans-serif",
   "margin": "2rem",
-  "logo_path": "logo.webp",
+  "logo_path": "logo.png",
   "recent_files": [
-    "C:/Users/Pete/Desktop/report_gen_4/Malware Analysis Report \u2013 Money.Gone.md",
-    "C:/Users/Pete/Desktop/test/Malware Analysis Report \u2013 asada.md",
-    "C:/Users/Pete/Desktop/test/Malware Analysis Report \u2013 asdfdfa.md"
+    "C:/Users/Pete/Code/md_report_gen/Malware_Analysis.md"
   ]
 }
