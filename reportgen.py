@@ -494,15 +494,22 @@ tlp: "AMBER"
             
             # Handle logo embedding from settings path
             logo_data = ""
-            script_dir = Path(__file__).parent.resolve()
-            logo_relative_path = self.settings.get("logo_path", "")
-            if logo_relative_path:
-                logo_file_path = (script_dir / logo_relative_path).resolve()
-                # Security check to prevent path traversal
-                if logo_file_path.exists() and (script_dir in logo_file_path.parents or script_dir == logo_file_path.parent):
-                    logo_data = self.encode_image_base64(logo_file_path)
-                else:
-                    self.status_var.set("Warning: Logo path is invalid or outside allowed directory")
+            logo_path = self.settings.get("logo_path", "")
+            if logo_path:
+                try:
+                    # Try to resolve logo path (absolute or relative to script dir)
+                    script_dir = Path(__file__).parent.resolve()
+                    if Path(logo_path).is_absolute():
+                        logo_file_path = Path(logo_path)
+                    else:
+                        logo_file_path = (script_dir / logo_path).resolve()
+                        
+                    if logo_file_path.exists():
+                        logo_data = self.encode_image_base64(logo_file_path)
+                    else:
+                        self.status_var.set(f"Warning: Logo file not found: {logo_file_path}")
+                except Exception as e:
+                    self.status_var.set(f"Warning: Error processing logo: {e}")
             
             # Current date for the report
             current_date = datetime.now().strftime("%B %d, %Y")
@@ -566,7 +573,11 @@ tlp: "AMBER"
         settings_window.geometry("400x300")
         settings_window.transient(self.root)
         settings_window.resizable(False, False)
-        
+        # Center the settings window over the root
+        settings_window.update_idletasks()
+        x = self.root.winfo_x() + (self.root.winfo_width() // 2) - (settings_window.winfo_width() // 2)
+        y = self.root.winfo_y() + (self.root.winfo_height() // 2) - (settings_window.winfo_height() // 2)
+        settings_window.geometry(f"+{x}+{y}")
         settings_frame = tk.Frame(settings_window, padx=15, pady=15)
         settings_frame.pack(fill=tk.BOTH, expand=True)
         
@@ -639,6 +650,12 @@ tlp: "AMBER"
         about_window.transient(self.root)
         about_window.resizable(False, False)
         
+        # Center the about window over the root
+        about_window.update_idletasks()
+        x = self.root.winfo_x() + (self.root.winfo_width() // 2) - (about_window.winfo_width() // 2)
+        y = self.root.winfo_y() + (self.root.winfo_height() // 2) - (about_window.winfo_height() // 2)
+        about_window.geometry(f"+{x}+{y}")
+
         about_frame = tk.Frame(about_window, padx=20, pady=20)
         about_frame.pack(fill=tk.BOTH, expand=True)
         
